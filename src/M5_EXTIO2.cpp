@@ -99,3 +99,27 @@ bool M5_EXTIO2::setServoPulse(uint8_t pin, uint16_t pulse) {
 }
 
 bool M5_EXTIO2::getDigitalInput(uint8_t pin) {
+    uint8_t data;
+    uint8_t reg = pin + M5_EXTIO2_DIGITAL_INPUT_REG;
+    if (readBytes(_addr, reg, &data, 1)) {
+        return data;
+    }
+    return 0;
+}
+
+uint16_t M5_EXTIO2::getAnalogInput(uint8_t pin, extio_anolog_read_mode_t bit) {
+    if (bit == _8bit) {
+        uint8_t data;
+        uint8_t reg = pin + M5_EXTIO2_ANALOG_INPUT_8B_REG;
+        if (readBytes(_addr, reg, &data, 1)) {
+            return data;
+        }
+    } else {
+        uint8_t data[2];
+        uint8_t reg = pin * 2 + M5_EXTIO2_ANALOG_INPUT_12B_REG;
+        if (readBytes(_addr, reg, data, 2)) {
+            return (data[1] << 8) | data[0];
+        }
+    }
+    return 0;
+}
