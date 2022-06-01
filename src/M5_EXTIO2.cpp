@@ -48,9 +48,7 @@ bool M5_EXTIO2::setAllPinMode(extio_io_mode_t mode) {
 
     return writeBytes(_addr, M5_EXTIO2_MODE_REG, data, 8);
     for (uint8_t i = 0; i < 8; i++) {
-        delay(1);
         if (writeBytes(_addr, i, &data[i], 1) == false) return false;
-        delay(9);
     }
     return true;
 }
