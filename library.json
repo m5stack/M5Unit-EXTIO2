@@ -10,7 +10,7 @@
     "type": "git",
     "url": "https://github.com/m5stack/M5Unit-EXTIO2.git"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "framework": "arduino",
   "platforms": "espressif32"
 }
