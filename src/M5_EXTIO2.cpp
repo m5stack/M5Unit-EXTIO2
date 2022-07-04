@@ -1,5 +1,7 @@
 #include "M5_EXTIO2.h"
 
+/*! @brief Initialize the EXTIO2.
+    @return True if the init was successful, otherwise false.. */
 bool M5_EXTIO2::begin(TwoWire *wire, uint8_t sda, uint8_t scl, uint8_t addr) {
     _wire = wire;
     _addr = addr;
@@ -16,6 +18,8 @@ bool M5_EXTIO2::begin(TwoWire *wire, uint8_t sda, uint8_t scl, uint8_t addr) {
     }
 }
 
+/*! @brief Write a certain length of data to the specified register address.
+    @return True if the write was successful, otherwise false.. */
 bool M5_EXTIO2::writeBytes(uint8_t addr, uint8_t reg, uint8_t *buffer,
                            uint8_t length) {
     _wire->beginTransmission(addr);
@@ -27,6 +31,8 @@ bool M5_EXTIO2::writeBytes(uint8_t addr, uint8_t reg, uint8_t *buffer,
     return false;
 }
 
+/*! @brief Read a certain length of data to the specified register address.
+    @return True if the read was successful, otherwise false.. */
 bool M5_EXTIO2::readBytes(uint8_t addr, uint8_t reg, uint8_t *buffer,
                           uint8_t length) {
     uint8_t index = 0;
@@ -42,6 +48,8 @@ bool M5_EXTIO2::readBytes(uint8_t addr, uint8_t reg, uint8_t *buffer,
     return false;
 }
 
+/*! @brief Set the mode of all pins.
+    @return True if the set was successful, otherwise false.. */
 bool M5_EXTIO2::setAllPinMode(extio_io_mode_t mode) {
     uint8_t data[8];
     memset(data, mode, 8);
@@ -53,6 +61,8 @@ bool M5_EXTIO2::setAllPinMode(extio_io_mode_t mode) {
     return true;
 }
 
+/*! @brief Set the addr of device.
+    @return True if the set was successful, otherwise false.. */
 bool M5_EXTIO2::setDeviceAddr(uint8_t addr) {
     if (writeBytes(_addr, M5_EXTIO2_ADDRESS_REG, &addr, 1)) {
         _addr = addr;
@@ -62,17 +72,23 @@ bool M5_EXTIO2::setDeviceAddr(uint8_t addr) {
     }
 }
 
+/*! @brief Get the Version of Firmware.
+    @return Firmware version */
 uint8_t M5_EXTIO2::getVersion() {
     uint8_t data = 0;
     readBytes(_addr, M5_EXTIO2_FW_VERSION_REG, &data, 1);
     return data;
 }
 
+/*! @brief Set digital signal output pin.
+    @return True if the set was successful, otherwise false.. */
 bool M5_EXTIO2::setDigitalOutput(uint8_t pin, uint8_t state) {
     uint8_t reg = pin + M5_EXTIO2_OUTPUT_CTL_REG;
     return writeBytes(_addr, reg, &state, 1);
 }
 
+/*! @brief Set the color of led lights.
+    @return True if the set was successful, otherwise false.. */
 bool M5_EXTIO2::setLEDColor(uint8_t pin, uint32_t color) {
     if (pin > 7) return false;
     uint8_t data[3] = {0};
@@ -83,11 +99,15 @@ bool M5_EXTIO2::setLEDColor(uint8_t pin, uint32_t color) {
     return writeBytes(_addr, reg, data, 3);
 }
 
+/*! @brief Set the angle of servo rotation.
+    @return True if the set was successful, otherwise false.. */
 bool M5_EXTIO2::setServoAngle(uint8_t pin, uint8_t angle) {
     uint8_t reg = pin + M5_EXTIO2_SERVO_ANGLE_8B_REG;
     return writeBytes(_addr, reg, &angle, 1);
 }
 
+/*! @brief Set the pulse of servo.
+    @return True if the set was successful, otherwise false.. */
 bool M5_EXTIO2::setServoPulse(uint8_t pin, uint16_t pulse) {
     uint8_t data[2];
     uint8_t reg = pin * 2 + M5_EXTIO2_SERVO_PULSE_16B_REG;
@@ -96,6 +116,8 @@ bool M5_EXTIO2::setServoPulse(uint8_t pin, uint16_t pulse) {
     return writeBytes(_addr, reg, data, 2);
 }
 
+/*! @brief Get digital singal input.
+    @return True if the read was successful, otherwise false.. */
 bool M5_EXTIO2::getDigitalInput(uint8_t pin) {
     uint8_t data;
     uint8_t reg = pin + M5_EXTIO2_DIGITAL_INPUT_REG;
@@ -105,6 +127,8 @@ bool M5_EXTIO2::getDigitalInput(uint8_t pin) {
     return 0;
 }
 
+/*! @brief Get analog singal input.
+    @return True if the read was successful, otherwise false.. */
 uint16_t M5_EXTIO2::getAnalogInput(uint8_t pin, extio_anolog_read_mode_t bit) {
     if (bit == _8bit) {
         uint8_t data;

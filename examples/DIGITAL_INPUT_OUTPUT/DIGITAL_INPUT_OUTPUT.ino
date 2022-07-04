@@ -1,3 +1,18 @@
+/*
+*******************************************************************************
+* Copyright (c) 2022 by M5Stack
+*                  Equipped with M5Core sample source code
+*                          配套 M5Core 示例源代码
+*
+* Visit for more information: https://docs.m5stack.com/en/unit/extio2
+* 获取更多资料请访问: https://docs.m5stack.com/zh_CN/unit/extio2
+*
+* Product: EXT.IO2.
+* Date: 2022/7/4
+*******************************************************************************
+  Digital signal input and output
+  数字信号输入和输出
+*/
 #include <M5Stack.h>
 #include <M5GFX.h>
 #include "M5_EXTIO2.h"
@@ -36,11 +51,15 @@ void setup() {
         delay(100);
     }
     // extio.setAllPinMode(DIGITAL_INPUT_MODE);
-    extio.setAllPinMode(DIGITAL_OUTPUT_MODE);
+    extio.setAllPinMode(
+        DIGITAL_OUTPUT_MODE);  // Set all pins to digital output mode.
+                               // 设置所有引脚为数字输出模式
     // extio.setAllPinMode(ADC_INPUT_MODE);
     // extio.setAllPinMode(SERVO_CTL_MODE);
     // extio.setAllPinMode(RGB_LED_MODE);
 
+    // Create a task of btnTask and assign core 0 to handle it。
+    // 创建 btnTask 任务并将其分配给 CPU 0 处理。
     xTaskCreatePinnedToCore(btnTask, "btnTask"  // A name just for humans
                             ,
                             4096  // This stack size can be checked & adjusted

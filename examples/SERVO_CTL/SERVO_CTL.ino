@@ -1,3 +1,18 @@
+/*
+*******************************************************************************
+* Copyright (c) 2022 by M5Stack
+*                  Equipped with M5Core sample source code
+*                          配套 M5Core 示例源代码
+*
+* Visit for more information: https://docs.m5stack.com/en/unit/extio2
+* 获取更多资料请访问: https://docs.m5stack.com/zh_CN/unit/extio2
+*
+* Product: EXT.IO2.
+* Date: 2022/7/4
+*******************************************************************************
+  Servo control
+  舵机控制
+*/
 #include <M5Stack.h>
 #include <M5GFX.h>
 #include "M5_EXTIO2.h"
