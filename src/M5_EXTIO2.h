@@ -12,18 +12,18 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#define M5_EXTIO2_DEFAULT_ADDR         0x45
-#define M5_EXTIO2_MODE_REG             0x00
-#define M5_EXTIO2_OUTPUT_CTL_REG       0x10
-#define M5_EXTIO2_DIGITAL_INPUT_REG    0x20
-#define M5_EXTIO2_ANALOG_INPUT_8B_REG  0x30
-#define M5_EXTIO2_ANALOG_INPUT_12B_REG 0x40
-#define M5_EXTIO2_SERVO_ANGLE_8B_REG   0x50
-#define M5_EXTIO2_SERVO_PULSE_16B_REG  0x60
-#define M5_EXTIO2_RGB_24B_REG          0x70
+#define EXTIO2_DEFAULT_ADDR         0x45
+#define EXTIO2_MODE_REG             0x00
+#define EXTIO2_OUTPUT_CTL_REG       0x10
+#define EXTIO2_DIGITAL_INPUT_REG    0x20
+#define EXTIO2_ANALOG_INPUT_8B_REG  0x30
+#define EXTIO2_ANALOG_INPUT_12B_REG 0x40
+#define EXTIO2_SERVO_ANGLE_8B_REG   0x50
+#define EXTIO2_SERVO_PULSE_16B_REG  0x60
+#define EXTIO2_RGB_24B_REG          0x70
 
-#define M5_EXTIO2_FW_VERSION_REG 0xFE
-#define M5_EXTIO2_ADDRESS_REG    0xFF
+#define EXTIO2_FW_VERSION_REG 0xFE
+#define EXTIO2_ADDRESS_REG    0xFF
 
 typedef enum {
     DIGITAL_INPUT_MODE = 0,
@@ -46,7 +46,7 @@ class M5_EXTIO2 {
 
    public:
     bool begin(TwoWire *wire = &Wire, uint8_t sda = 21, uint8_t scl = 22,
-               uint8_t addr = M5_EXTIO2_DEFAULT_ADDR);
+               uint8_t addr = EXTIO2_DEFAULT_ADDR);
     bool setAllPinMode(extio_io_mode_t mode);
     bool setDeviceAddr(uint8_t addr);
     bool setServoAngle(uint8_t pin, uint8_t angle);

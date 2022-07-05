@@ -54,7 +54,7 @@ bool M5_EXTIO2::setAllPinMode(extio_io_mode_t mode) {
     uint8_t data[8];
     memset(data, mode, 8);
 
-    return writeBytes(_addr, M5_EXTIO2_MODE_REG, data, 8);
+    return writeBytes(_addr, EXTIO2_MODE_REG, data, 8);
     for (uint8_t i = 0; i < 8; i++) {
         if (writeBytes(_addr, i, &data[i], 1) == false) return false;
     }
@@ -64,7 +64,7 @@ bool M5_EXTIO2::setAllPinMode(extio_io_mode_t mode) {
 /*! @brief Set the addr of device.
     @return True if the set was successful, otherwise false.. */
 bool M5_EXTIO2::setDeviceAddr(uint8_t addr) {
-    if (writeBytes(_addr, M5_EXTIO2_ADDRESS_REG, &addr, 1)) {
+    if (writeBytes(_addr, EXTIO2_ADDRESS_REG, &addr, 1)) {
         _addr = addr;
         return true;
     } else {
@@ -76,14 +76,14 @@ bool M5_EXTIO2::setDeviceAddr(uint8_t addr) {
     @return Firmware version */
 uint8_t M5_EXTIO2::getVersion() {
     uint8_t data = 0;
-    readBytes(_addr, M5_EXTIO2_FW_VERSION_REG, &data, 1);
+    readBytes(_addr, EXTIO2_FW_VERSION_REG, &data, 1);
     return data;
 }
 
 /*! @brief Set digital signal output pin.
     @return True if the set was successful, otherwise false.. */
 bool M5_EXTIO2::setDigitalOutput(uint8_t pin, uint8_t state) {
-    uint8_t reg = pin + M5_EXTIO2_OUTPUT_CTL_REG;
+    uint8_t reg = pin + EXTIO2_OUTPUT_CTL_REG;
     return writeBytes(_addr, reg, &state, 1);
 }
 
@@ -95,14 +95,14 @@ bool M5_EXTIO2::setLEDColor(uint8_t pin, uint32_t color) {
     data[0]         = (color >> 16) & 0xff;
     data[1]         = (color >> 8) & 0xff;
     data[2]         = color & 0xff;
-    uint8_t reg     = pin * 3 + M5_EXTIO2_RGB_24B_REG;
+    uint8_t reg     = pin * 3 + EXTIO2_RGB_24B_REG;
     return writeBytes(_addr, reg, data, 3);
 }
 
 /*! @brief Set the angle of servo rotation.
     @return True if the set was successful, otherwise false.. */
 bool M5_EXTIO2::setServoAngle(uint8_t pin, uint8_t angle) {
-    uint8_t reg = pin + M5_EXTIO2_SERVO_ANGLE_8B_REG;
+    uint8_t reg = pin + EXTIO2_SERVO_ANGLE_8B_REG;
     return writeBytes(_addr, reg, &angle, 1);
 }
 
@@ -110,7 +110,7 @@ bool M5_EXTIO2::setServoAngle(uint8_t pin, uint8_t angle) {
     @return True if the set was successful, otherwise false.. */
 bool M5_EXTIO2::setServoPulse(uint8_t pin, uint16_t pulse) {
     uint8_t data[2];
-    uint8_t reg = pin * 2 + M5_EXTIO2_SERVO_PULSE_16B_REG;
+    uint8_t reg = pin * 2 + EXTIO2_SERVO_PULSE_16B_REG;
     data[1]     = (pulse >> 8) & 0xff;
     data[0]     = pulse & 0xff;
     return writeBytes(_addr, reg, data, 2);
@@ -120,7 +120,7 @@ bool M5_EXTIO2::setServoPulse(uint8_t pin, uint16_t pulse) {
     @return True if the read was successful, otherwise false.. */
 bool M5_EXTIO2::getDigitalInput(uint8_t pin) {
     uint8_t data;
-    uint8_t reg = pin + M5_EXTIO2_DIGITAL_INPUT_REG;
+    uint8_t reg = pin + EXTIO2_DIGITAL_INPUT_REG;
     if (readBytes(_addr, reg, &data, 1)) {
         return data;
     }
@@ -132,13 +132,13 @@ bool M5_EXTIO2::getDigitalInput(uint8_t pin) {
 uint16_t M5_EXTIO2::getAnalogInput(uint8_t pin, extio_anolog_read_mode_t bit) {
     if (bit == _8bit) {
         uint8_t data;
-        uint8_t reg = pin + M5_EXTIO2_ANALOG_INPUT_8B_REG;
+        uint8_t reg = pin + EXTIO2_ANALOG_INPUT_8B_REG;
         if (readBytes(_addr, reg, &data, 1)) {
             return data;
         }
     } else {
         uint8_t data[2];
-        uint8_t reg = pin * 2 + M5_EXTIO2_ANALOG_INPUT_12B_REG;
+        uint8_t reg = pin * 2 + EXTIO2_ANALOG_INPUT_12B_REG;
         if (readBytes(_addr, reg, data, 2)) {
             return (data[1] << 8) | data[0];
         }
