@@ -1,3 +1,11 @@
+/*!
+ * @brief An IO extended From M5Stack
+ * @copyright Copyright (c) 2022 by M5Stack[https://m5stack.com]
+ *
+ * @Links [EXT.IO2](https://docs.m5stack.com/en/unit/extio2)
+ * @version  V1.0.1
+ * @date  2022-07-04
+ */
 #ifndef _M5_EXTIO2_H_
 #define _M5_EXTIO2_H_
 
