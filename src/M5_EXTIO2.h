@@ -11,6 +11,7 @@
 
 #include <Arduino.h>
 #include <Wire.h>
+#include "pins_arduino.h"
 
 #define EXTIO2_DEFAULT_ADDR         0x45
 #define EXTIO2_MODE_REG             0x00
@@ -45,7 +46,7 @@ class M5_EXTIO2 {
     bool readBytes(uint8_t addr, uint8_t reg, uint8_t *buffer, uint8_t length);
 
    public:
-    bool begin(TwoWire *wire = &Wire, uint8_t sda = 21, uint8_t scl = 22,
+    bool begin(TwoWire *wire = &Wire, uint8_t sda = SDA, uint8_t scl = SCL,
                uint8_t addr = EXTIO2_DEFAULT_ADDR);
     bool setAllPinMode(extio_io_mode_t mode);
     bool setDeviceAddr(uint8_t addr);
