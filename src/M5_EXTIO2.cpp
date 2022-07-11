@@ -62,9 +62,9 @@ bool M5_EXTIO2::setAllPinMode(extio_io_mode_t mode) {
 }
 
 /*! @brief Set the mode of one pin.
-    @return True if the set was successful, otherwise false.. */
+     @return True if the set was successful, otherwise false.. */
 bool M5_EXTIO2::setPinMode(uint8_t pin, extio_io_mode_t mode) {
-    if((pin >= 0) && (pin <= 7)) {
+    if ((pin >= 0) && (pin <= 7)) {
         uint8_t data[1] = {mode};
 
         return writeBytes(_addr, EXTIO2_MODE_REG + pin, data, 1);
