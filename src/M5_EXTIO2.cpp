@@ -99,6 +99,13 @@ bool M5_EXTIO2::setDigitalOutput(uint8_t pin, uint8_t state) {
     return writeBytes(_addr, reg, &state, 1);
 }
 
+/*! @brief Set all digital signal output pins.
+    @return True if the set was successful, otherwise false.. */
+bool M5_EXTIO2::setAllDigitalOutputs(uint8_t pins) {
+    uint8_t reg = EXTIO2_OUTPUTS_CTL_REG;
+    return writeBytes(_addr, reg, &pins, 1);
+}
+
 /*! @brief Set the color of led lights.
     @return True if the set was successful, otherwise false.. */
 bool M5_EXTIO2::setLEDColor(uint8_t pin, uint32_t color) {
@@ -128,11 +135,22 @@ bool M5_EXTIO2::setServoPulse(uint8_t pin, uint16_t pulse) {
     return writeBytes(_addr, reg, data, 2);
 }
 
-/*! @brief Get digital singal input.
-    @return True if the read was successful, otherwise false.. */
+/*! @brief Get digital signal input.
+    @return True if the pin was high, and false if the pin was low or the read was unsuccessful */
 bool M5_EXTIO2::getDigitalInput(uint8_t pin) {
     uint8_t data;
     uint8_t reg = pin + EXTIO2_DIGITAL_INPUT_REG;
+    if (readBytes(_addr, reg, &data, 1)) {
+        return data;
+    }
+    return 0;
+}
+
+/*! @brief Get all digital signal inputs.
+    @return pin status 0-7 as bits of byte, or returns 0 if read is unsuccessful.. */
+uint8_t M5_EXTIO2::getAllDigitalInputs(void) {
+    uint8_t data;
+    uint8_t reg = EXTIO2_DIGITAL_INPUTS_REG;
     if (readBytes(_addr, reg, &data, 1)) {
         return data;
     }
