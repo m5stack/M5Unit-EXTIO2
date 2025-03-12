@@ -24,6 +24,8 @@
 #define EXTIO2_SERVO_ANGLE_8B_REG   0x50
 #define EXTIO2_SERVO_PULSE_16B_REG  0x60
 #define EXTIO2_RGB_24B_REG          0x70
+#define EXTIO2_PWM_DUTY_CYCLE_REG   0x90
+#define EXTIO2_PWM_FREQUENCY_REG    0xA0
 
 #define EXTIO2_FW_VERSION_REG 0xFE
 #define EXTIO2_ADDRESS_REG    0xFF
@@ -62,6 +64,8 @@ class M5_EXTIO2 {
     uint8_t getAllDigitalInputs(void);
     uint16_t getAnalogInput(uint8_t pin, extio_anolog_read_mode_t bit = _8bit);
     uint8_t getVersion();
+    bool setPwmDutyCycle(uint8_t pin, uint8_t duty);
+    bool setPwmFrequency(uint8_t pin, uint8_t freq);
 };
 
 #endif

@@ -177,3 +177,17 @@ uint16_t M5_EXTIO2::getAnalogInput(uint8_t pin, extio_anolog_read_mode_t bit) {
     }
     return 0;
 }
+
+/*! @brief Set the pwm duty cycle.
+    @return True if the set was successful, otherwise false.. */
+bool M5_EXTIO2::setPwmDutyCycle(uint8_t pin, uint8_t duty) {
+    uint8_t reg = pin + EXTIO2_PWM_DUTY_CYCLE_REG;
+    return writeBytes(_addr, reg, &duty, 1);
+}
+
+/*! @brief Set the pwm frequency.0:2KHz,1:1KHz,2:500Hz,3:250Hz,4:125Hz
+    @return True if the set was successful, otherwise false.. */
+bool M5_EXTIO2::setPwmFrequency(uint8_t pin, uint8_t freq) {
+    uint8_t reg = pin + EXTIO2_PWM_FREQUENCY_REG;
+    return writeBytes(_addr, reg, &freq, 1);
+}
