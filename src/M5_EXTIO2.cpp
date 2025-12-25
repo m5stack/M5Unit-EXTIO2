@@ -178,16 +178,32 @@ uint16_t M5_EXTIO2::getAnalogInput(uint8_t pin, extio_anolog_read_mode_t bit) {
     return 0;
 }
 
-/*! @brief Set the pwm duty cycle.
+/*! @brief Set the pwm duty cycle for a specific pin.
+    @param pin Pin number (0-7)
+    @param duty Duty cycle percentage (0-100)
     @return True if the set was successful, otherwise false.. */
 bool M5_EXTIO2::setPwmDutyCycle(uint8_t pin, uint8_t duty) {
+    if (pin > 7) return false;
+    if (duty > 100) duty = 100;
     uint8_t reg = pin + EXTIO2_PWM_DUTY_CYCLE_REG;
     return writeBytes(_addr, reg, &duty, 1);
 }
 
-/*! @brief Set the pwm frequency.0:2KHz,1:1KHz,2:500Hz,3:250Hz,4:125Hz
+/*! @brief Set the pwm frequency for a specific pin (legacy - for backward compatibility).
+    @param pin Pin number (0-7) - NOTE: This parameter is ignored as frequency is global
+    @param freq Frequency setting (0-4): 0=2KHz, 1=1KHz, 2=500Hz, 3=250Hz, 4=125Hz
     @return True if the set was successful, otherwise false.. */
 bool M5_EXTIO2::setPwmFrequency(uint8_t pin, uint8_t freq) {
-    uint8_t reg = pin + EXTIO2_PWM_FREQUENCY_REG;
+    if (freq > 4) freq = 4;
+    uint8_t reg = EXTIO2_PWM_FREQUENCY_REG;
     return writeBytes(_addr, reg, &freq, 1);
+}
+
+/*! @brief Set the pwm frequency for all PWM pins (recommended).
+    @param freq Frequency enum: PWM_2KHZ, PWM_1KHZ, PWM_500HZ, PWM_250HZ, PWM_125HZ
+    @return True if the set was successful, otherwise false.. */
+bool M5_EXTIO2::setPwmFrequency(extio_pwm_freq_t freq) {
+    uint8_t freq_val = (uint8_t)freq;
+    uint8_t reg = EXTIO2_PWM_FREQUENCY_REG;
+    return writeBytes(_addr, reg, &freq_val, 1);
 }

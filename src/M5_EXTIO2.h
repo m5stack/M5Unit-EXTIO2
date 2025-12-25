@@ -3,8 +3,8 @@
  * @copyright Copyright (c) 2022 by M5Stack[https://m5stack.com]
  *
  * @Links [EXT.IO2](https://docs.m5stack.com/en/unit/extio2)
- * @version  V1.0.2
- * @date  2022-07-07
+ * @version  V1.0.3
+ * @date  2025-12-25
  */
 #ifndef _M5_EXTIO2_H_
 #define _M5_EXTIO2_H_
@@ -35,10 +35,19 @@ typedef enum {
     DIGITAL_OUTPUT_MODE,
     ADC_INPUT_MODE,
     SERVO_CTL_MODE,
-    RGB_LED_MODE
+    RGB_LED_MODE,
+    PWM_MODE
 } extio_io_mode_t;
 
 typedef enum { _8bit = 0, _12bit } extio_anolog_read_mode_t;
+
+typedef enum {
+    PWM_2KHZ = 0,
+    PWM_1KHZ = 1,
+    PWM_500HZ = 2,
+    PWM_250HZ = 3,
+    PWM_125HZ = 4
+} extio_pwm_freq_t;
 
 class M5_EXTIO2 {
    private:
@@ -66,6 +75,7 @@ class M5_EXTIO2 {
     uint8_t getVersion();
     bool setPwmDutyCycle(uint8_t pin, uint8_t duty);
     bool setPwmFrequency(uint8_t pin, uint8_t freq);
+    bool setPwmFrequency(extio_pwm_freq_t freq);
 };
 
 #endif
