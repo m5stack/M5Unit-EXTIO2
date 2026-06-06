@@ -2,13 +2,15 @@
 
 /*! @brief Initialize the EXTIO2.
     @return True if the init was successful, otherwise false.. */
-bool M5_EXTIO2::begin(TwoWire *wire, uint8_t sda, uint8_t scl, uint8_t addr) {
+bool M5_EXTIO2::begin(TwoWire *wire, uint8_t sda, uint8_t scl, uint8_t addr, bool initWire) {
     _wire = wire;
     _addr = addr;
     _sda  = sda;
     _scl  = scl;
-    _wire->begin((int)_sda, (int)_scl);
-    delay(10);
+    if (initWire) {
+        _wire->begin((int)_sda, (int)_scl);
+        delay(10);
+    }
     _wire->beginTransmission(_addr);
     uint8_t error = _wire->endTransmission();
     if (error == 0) {
